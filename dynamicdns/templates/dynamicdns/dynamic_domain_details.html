@@ -1,0 +1,6 @@
+<h1>Dynamic Domains</h1>
+<ul>
+{% for dynamic_domain in dynamic_domains %}
+    <li>{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</li>
+{% endfor %}
+</ul>

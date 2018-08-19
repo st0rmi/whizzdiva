@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import generic
 
-from dynamicdns.models import DynamicDomain
+from whizzdiva.models import DynamicDomain
 
 
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
 
 
 class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):
-    template_name = 'dynamicdns/dynamic_domains_overview.html'
+    template_name = 'whizzdiva/dynamic_domains_overview.html'
     context_object_name = 'dynamic_domains'
 
     def get_queryset(self):
@@ -20,4 +20,4 @@ class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):
 
 class DynamicDomainView(LoginRequiredMixin, generic.DetailView):
     model = DynamicDomain
-    template_name = 'dynamicdns/dynamic_domain_details.html'
+    template_name = 'whizzdiva/dynamic_domain_details.html'

@@ -1,6 +1,2 @@
-<h1>Dynamic Domains</h1>
-<ul>
-{% for dynamic_domain in dynamic_domains %}
-    <li>{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</li>
-{% endfor %}
-</ul>
+<h1>Dynamic Domain</h1>
+{{ dynamicdomain.relative_domain }}.{{ dynamicdomain.zone.domain }}

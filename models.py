@@ -51,7 +51,7 @@ class DynamicDomain(AbstractModel):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     zone = models.ForeignKey(Zone, on_delete=models.PROTECT)
     relative_domain = models.CharField(max_length=50)
-    ttl = models.PositiveIntegerField(null=True)
+    ttl = models.PositiveIntegerField(blank=True, null=True)
     ipv4 = models.GenericIPAddressField(protocol='IPv4', blank=True, null=True)
     ipv6 = models.GenericIPAddressField(protocol='IPv6', blank=True, null=True)
 

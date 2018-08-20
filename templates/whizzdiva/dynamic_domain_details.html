@@ -1,2 +1,9 @@
-<h1>Dynamic Domain</h1>
+{% extends 'whizzdiva/base.html' %}
+{% load bootstrap4 %}
+{% load icons %}
+
+{% block title %}Dynamic Domain{% endblock %}
+
+{% block content %}
 {{ dynamicdomain.relative_domain }}.{{ dynamicdomain.zone.domain }}
+{% endblock %}

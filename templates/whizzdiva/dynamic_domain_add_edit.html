@@ -1,9 +1,17 @@
+{% extends 'whizzdiva/base.html' %}
+{% load bootstrap4 %}
+{% load icons %}
+
+{% block title %}{% if add %}Add{% else %}Edit{% endif %} Dynamic Domain{% endblock %}
+
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" class="form">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit">
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+        {% icon 'edit' %} {% if add %}Add{% else %}Save{% endif %}
+    </button>
+    {% endbuttons %}
 </form>
 {% endblock %}

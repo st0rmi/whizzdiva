@@ -1,7 +1,17 @@
+{% extends 'whizzdiva/base.html' %}
+{% load bootstrap4 %}
+{% load icons %}
+
+{% block title %}Delete Dynamic Domain{% endblock %}
+
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
     Are you sure you want to delete the dynamic domain {{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}?
-    <input type="submit" value="Delete">
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+        {% icon 'delete' %} Delete
+    </button>
+    {% endbuttons %}
 </form>
 {% endblock %}

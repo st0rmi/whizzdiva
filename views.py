@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -11,7 +11,8 @@ from whizzdiva.models import DynamicDomain
 
 
 def index(request):
-    return HttpResponse("Hello, world.")  # TODO: default landing page
+    return render(request, "whizzdiva/index.html")
+    # return HttpResponse("Hello, world.")  # TODO: default landing page
 
 
 class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):
@@ -43,7 +44,7 @@ def add_dynamic_domain(request):
     else:
         form = DynamicDomainForm()
 
-    return render(request, "whizzdiva/dynamic_domain_add_edit.html", {'form': form})
+    return render(request, "whizzdiva/dynamic_domain_add_edit.html", {'form': form, 'add': True})
 
 
 @login_required

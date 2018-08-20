@@ -1,0 +1,7 @@
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    Are you sure you want to delete the dynamic domain {{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}?
+    <input type="submit" value="Delete">
+</form>
+{% endblock %}

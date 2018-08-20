@@ -27,8 +27,7 @@ class DynamicDomainView(LoginRequiredMixin, generic.DetailView):
     template_name = 'whizzdiva/dynamic_domain_details.html'
 
     def get_queryset(self):
-        queryset = super(DynamicDomainView, self).get_queryset()
-        return queryset.filter(owner=self.request.user)
+        return super(DynamicDomainView, self).get_queryset().filter(owner=self.request.user)
 
 
 @login_required

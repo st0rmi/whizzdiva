@@ -12,7 +12,6 @@ from whizzdiva.models import DynamicDomain
 
 def index(request):
     return render(request, "whizzdiva/index.html")
-    # return HttpResponse("Hello, world.")  # TODO: default landing page
 
 
 class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):

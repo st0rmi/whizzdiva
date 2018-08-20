@@ -19,12 +19,16 @@ class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):
     context_object_name = 'dynamic_domains'
 
     def get_queryset(self):
-        return DynamicDomain.objects.order_by('zone__domain', 'relative_domain')
+        return DynamicDomain.objects.order_by('zone__domain', 'relative_domain').filter(owner=self.request.user)
 
 
 class DynamicDomainView(LoginRequiredMixin, generic.DetailView):
     model = DynamicDomain
     template_name = 'whizzdiva/dynamic_domain_details.html'
+
+    def get_queryset(self):
+        queryset = super(DynamicDomainView, self).get_queryset()
+        return queryset.filter(owner=self.request.user)
 
 
 @login_required

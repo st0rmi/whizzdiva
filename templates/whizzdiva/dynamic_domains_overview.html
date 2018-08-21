@@ -1,13 +1,63 @@
 {% extends 'whizzdiva/base.html' %}
-{% load bootstrap4 %}
 {% load icons %}
 
 {% block title %}Dynamic Domains{% endblock %}
 
 {% block content %}
-<ul>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Domain</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for dynamic_domain in dynamic_domains %}
+    <tr>
+        <td>{% if dynamic_domain.name %}{{ dynamic_domain.name }}{% else %}N/A{% endif %}</td>
+        <td>{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</td>
+        <td><a href="{% url 'whizzdiva:dynamic_domain_edit' pk=dynamic_domain.pk %}" class="btn btn-warning"
+               role="button" aria-pressed="true">Edit</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal"
+                    data-target="#modalDeleteDomain{{ dynamic_domain.pk }}">Delete
+            </button>
+
+            <div class="modal fade" id="modalDeleteDomain{{ dynamic_domain.pk }}" tabindex="-1" role="dialog"
+                 aria-labelledby="modalDeleteDomain{{ dynamic_domain.pk }}Label"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDeleteDomain{{ dynamic_domain.pk }}Label">Warning</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Deleting a dynamic domain cannot be undone! Are you sure you want to delete
+                            <i>{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</i>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form action="{% url 'whizzdiva:dynamic_domain_delete' pk=dynamic_domain.pk %}"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
 {% for dynamic_domain in dynamic_domains %}
-    <li><a href="{% url 'whizzdiva:dynamic_domain_details' dynamic_domain.id %}">{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</a></li>
+<!-- Modal -->
+
 {% endfor %}
-</ul>
 {% endblock %}

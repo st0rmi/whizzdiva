@@ -6,7 +6,7 @@ from django.db import models
 
 
 class AbstractModel(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, blank=True, null=True)
     create_date = models.DateTimeField('date created', auto_now_add=True, editable=False)
     modify_date = models.DateTimeField('date last modified', auto_now=True, editable=False)
 

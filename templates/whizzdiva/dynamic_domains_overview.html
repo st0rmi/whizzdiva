@@ -9,6 +9,9 @@
     <tr>
         <th scope="col">Name</th>
         <th scope="col">Domain</th>
+        <th scope="col">Created at</th>
+        <th scope="col">IPv4</th>
+        <th scope="col">IPv6</th>
         <th scope="col">Action</th>
     </tr>
     </thead>
@@ -17,16 +20,19 @@
     <tr>
         <td>{% if dynamic_domain.name %}{{ dynamic_domain.name }}{% else %}N/A{% endif %}</td>
         <td>{{ dynamic_domain.relative_domain }}.{{ dynamic_domain.zone.domain }}</td>
-        <td><a href="{% url 'whizzdiva:dynamic_domain_edit' pk=dynamic_domain.pk %}" class="btn btn-warning"
+        <td>{{ dynamic_domain.create_date }}</td>
+        <td>{{ dynamic_domain.ipv4 }}</td>
+        <td>{{ dynamic_domain.ipv6 }}</td>
+        <td><a href="{% url 'whizzdiva:dynamic_domain_edit' pk=dynamic_domain.pk %}" class="btn btn-primary"
                role="button" aria-pressed="true">Edit</a>
             <button type="button" class="btn btn-danger" data-toggle="modal"
                     data-target="#modalDeleteDomain{{ dynamic_domain.pk }}">Delete
             </button>
-
+            <!--Delete Modal for {{ dynamic_domain.pk }}-->
             <div class="modal fade" id="modalDeleteDomain{{ dynamic_domain.pk }}" tabindex="-1" role="dialog"
                  aria-labelledby="modalDeleteDomain{{ dynamic_domain.pk }}Label"
                  aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalDeleteDomain{{ dynamic_domain.pk }}Label">Warning</h5>
@@ -54,10 +60,49 @@
     {% endfor %}
     </tbody>
 </table>
-
-
-{% for dynamic_domain in dynamic_domains %}
-<!-- Modal -->
-
-{% endfor %}
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAddDomain">Add new domain</button>
+<!--Add Modal-->
+<div class="modal fade" id="modalAddDomain" tabindex="-1" role="dialog"
+     aria-labelledby="modalAddDomainLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAddDomainLabel">Add new domain</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'whizzdiva:dynamic_domain_add' %}" method="post">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="{{ add_form.relative_domain.label }}"
+                                   name="{{ add_form.relative_domain.html_name}}"
+                                   required id="{{ add_form.relative_domain.id_for_label }}"
+                                   value="{% if add_form.relative_domain.value %}{{ add_form.relative_domain.value }}
+                               {% endif %}">
+                        </div>
+                        <div class="col">
+                            <select name="{{ add_form.zone.html_name}}"
+                                    required id="{{ add_form.zone.id_for_label }}" class="form-control">
+                                {% for x,y in add_form.fields.zone.choices %}
+                                {{ add_form.fields.zone.value }}
+                                <option value="{{ x }}" {% if add_form.zone.value == x %} selected{% endif %}>
+                                    {% if x != "" %}.{% endif %}{{ y }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

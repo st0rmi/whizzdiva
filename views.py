@@ -21,6 +21,13 @@ class DynamicDomainsOverview(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return DynamicDomain.objects.order_by('zone__domain', 'relative_domain').filter(owner=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['add_form'] = DynamicDomainForm()
+        return context
+
 
 class DynamicDomainView(LoginRequiredMixin, generic.DetailView):
     model = DynamicDomain
@@ -38,7 +45,7 @@ def add_dynamic_domain(request):
             dynamic_domain = form.save(commit=False)
             dynamic_domain.owner = request.user
             dynamic_domain.save()
-            return HttpResponseRedirect(reverse('whizzdiva:dynamic_domain_details', args=(dynamic_domain.pk,)))
+            return HttpResponseRedirect(reverse('whizzdiva:dynamic_domains_overview'))
     else:
         form = DynamicDomainForm()
 
@@ -58,7 +65,7 @@ def edit_dynamic_domain(request, pk):
             dynamic_domain_new.create_date = dynamic_domain.create_date
             dynamic_domain_new.owner = request.user
             dynamic_domain_new.save()
-            return HttpResponseRedirect(reverse('whizzdiva:dynamic_domain_details', args=(pk,)))
+            return HttpResponseRedirect(reverse('whizzdiva:dynamic_domains_overview'))
     else:
         form = DynamicDomainForm(instance=dynamic_domain)
 

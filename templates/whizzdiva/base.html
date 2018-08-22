@@ -15,10 +15,18 @@
 <div class="container">
     <h1>{% block headline %}Whizzdiva{% endblock %}</h1>
 
-    <p>
-        <a href="{% url 'whizzdiva:index' %}">Home</a>
-        <a href="{% url 'whizzdiva:dynamic_domains_overview' %}">Dynamic Domains</a>
-    </p>
+    <ul class="nav nav-tabs">
+        <li class="nav-items">
+            <a class="nav-link {% if request.path == '/'%}active{% endif %}" href="{% url 'whizzdiva:index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if 'dynamic_domain' in request.path %}active{% endif %}"
+               href="{% url 'whizzdiva:dynamic_domains_overview' %}">Dynamic Domains</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Account</a>
+        </li>
+    </ul>
 
     {% block content %}(no content){% endblock %}
 </div>

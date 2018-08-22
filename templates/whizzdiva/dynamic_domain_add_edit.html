@@ -9,11 +9,11 @@
     <div class="form-row">
         <div class="col">
             <input type="text" class="form-control" placeholder="{{ form.relative_domain.label }}"
-                   name="{{ form.relative_domain.html_name}}" required id="{{ form.relative_domain.id_for_label }}"
+                   name="{{ form.relative_domain.html_name }}" required id="{{ form.relative_domain.id_for_label }}"
                    value="{% if form.relative_domain.value %}{{ form.relative_domain.value }}{% endif %}">
         </div>
         <div class="col">
-            <select name="{{ form.zone.html_name}}" required id="{{ form.zone.id_for_label }}" class="form-control">
+            <select name="{{ form.zone.html_name }}" required id="{{ form.zone.id_for_label }}" class="form-control">
                 {% for x,y in form.fields.zone.choices %}
                 <option value="{{ x }}" {% if form.zone.value == x %}selected{% endif %}>
                     {% if x != "" %}.{% endif %}{{ y }}

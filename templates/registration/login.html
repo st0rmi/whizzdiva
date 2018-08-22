@@ -1,6 +1,7 @@
 {% extends 'whizzdiva/base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Sign in{% endblock %}
+{% block headline %}Sign in{% endblock %}
 
 {% block content %}
 <form method="post" action="{% url 'login' %}">
@@ -28,7 +29,9 @@
     <div class="form-group row">
         <div class="col-sm-10">
             <div class="alert alert-danger" role="alert">
-                Your username and password didn't match. Please try again.
+                Your username and password didn't match.
+                Please try again or <a href="{% url 'password_reset' %}" class="alert-link">reset your
+                password</a>.
             </div>
         </div>
     </div>
@@ -37,7 +40,8 @@
     <div class="form-group row">
         <div class="col-sm-10">
             <div class="alert alert-warning" role="alert">
-                Your account doesn't have access to this page. To proceed, please sign in with an account that has
+                Your account doesn't have access to this page. To proceed, please sign in with an account that
+                has
                 access.
             </div>
         </div>

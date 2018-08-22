@@ -34,8 +34,13 @@
             </ul>
         </div>
     </nav>
-
-    {% block content %}(no content){% endblock %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{% block headline %}(no headline){% endblock %}</h5>
+            <hr>
+            {% block content %}(no content){% endblock %}
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

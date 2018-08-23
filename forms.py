@@ -11,6 +11,6 @@ class DynamicDomainForm(ModelForm):
 
         error_messages = {
             NON_FIELD_ERRORS: {
-                'unique_together': "%(relative_domain)s.%(zone.domain)s is already taken.",
+                'unique_together': "The combination of %(field_labels)s is already in use.",
             }
         }

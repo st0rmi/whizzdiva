@@ -1,4 +1,5 @@
 # Create your views here.
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -55,16 +56,10 @@ def add_dynamic_domain(request):
 @login_required
 def edit_dynamic_domain(request, pk):
     dynamic_domain = get_object_or_404(DynamicDomain, pk=pk, owner=request.user)
-
     if request.method == 'POST':
-        form = DynamicDomainForm(request.POST)
+        form = DynamicDomainForm(request.POST or None, instance=dynamic_domain)
         if form.is_valid():
-            dynamic_domain_new = form.save(commit=False)
-            dynamic_domain_new.pk = pk
-            dynamic_domain_new.ttl = dynamic_domain.ttl
-            dynamic_domain_new.create_date = dynamic_domain.create_date
-            dynamic_domain_new.owner = request.user
-            dynamic_domain_new.save()
+            form.save()
             return HttpResponseRedirect(reverse('whizzdiva:dynamic_domains_overview'))
     else:
         form = DynamicDomainForm(instance=dynamic_domain)
